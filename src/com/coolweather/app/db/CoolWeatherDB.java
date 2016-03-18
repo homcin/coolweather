@@ -27,7 +27,7 @@ public class CoolWeatherDB { //把常用的数据库操作封装起来
 	}
 	
 	public  synchronized static CoolWeatherDB getInstance(Context context) {
-		if(coolWeatherDB != null) {
+		if(coolWeatherDB == null) {
 			coolWeatherDB = new CoolWeatherDB(context);
 		}
 		return coolWeatherDB;
@@ -42,7 +42,7 @@ public class CoolWeatherDB { //把常用的数据库操作封装起来
 		}
 	}
 	
-	public List<Province> loadProvince() {
+	public List<Province> loadProvinces() {
 		List<Province> list = new ArrayList<Province>();
 		Cursor cursor = db.query("Province", null, null, null, null, null, null);
 		if(cursor.moveToFirst()) {
@@ -80,6 +80,7 @@ public class CoolWeatherDB { //把常用的数据库操作封装起来
 				city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
 				city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
 				city.setProvinceId(provinceId);
+				list.add(city);
 			} while(cursor.moveToNext());
 		}
 		if (cursor != null) {
@@ -109,6 +110,7 @@ public class CoolWeatherDB { //把常用的数据库操作封装起来
 				county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
 				county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
 				county.setCityId(cityId);
+				list.add(county);
 			} while(cursor.moveToNext());
 		}
 		if (cursor != null) {
