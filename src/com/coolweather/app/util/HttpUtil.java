@@ -8,7 +8,8 @@ import java.net.URL;
 
 public class HttpUtil {
 	
-	public static void sendHttpRequest(final String address, final HttpCallbackListener listener) {
+	public static void sendHttpRequest(final String address,
+			final HttpCallbackListener listener) {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -23,18 +24,20 @@ public class HttpUtil {
 					BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 					StringBuilder response = new StringBuilder();
 					String line;
-					while((line = reader.readLine()) != null) {
+					while ((line = reader.readLine()) != null) {
 						response.append(line);
 					}
-					if(listener != null) {
+					if (listener != null) {
+						// 回调onFinish()方法
 						listener.onFinish(response.toString());
 					}
-				} catch(Exception e) {
-					if(listener != null) {
+				} catch (Exception e) {
+					if (listener != null) {
+						// 回调onError()方法
 						listener.onError(e);
 					}
 				} finally {
-					if(connection != null) {
+					if (connection != null) {
 						connection.disconnect();
 					}
 				}
